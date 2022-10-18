@@ -24,9 +24,8 @@ class BookStoreRequest extends FormRequest
     public function rules()
     {
         return [  
-            'name' => 'required|string|max:255',
-            'user_id' => 'required|string|max:255|exists:users,id',
-            'isbn' => 'required|integer|max:11',
+            'name' => 'required|string|max:255', 
+            'isbn' => 'required|integer|between:0,999999999',
             'value' => 'required|numeric|between:0,999999.99',
         ];
     }
