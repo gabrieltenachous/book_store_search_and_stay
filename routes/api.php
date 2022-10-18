@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BookStoreController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,7 +15,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// AUTHENTICATED ROUTES
+Route::middleware('auth:sanctum')->group(function () {
+    //CRUD BOOK STORE
+    Route::apiResource('/book_store', BookStoreController::class);
 });
+
+//LOGIN IN ACCOUNT
+Route::post('/user/login', [UserController::class,'login']);
+//LOGOUT OF ACCOUNT
+Route::post('/user/logout', [UserController::class,'logout']);
+//USER REGISTER
+Route::post('/user/register', [UserController::class,'register']);
