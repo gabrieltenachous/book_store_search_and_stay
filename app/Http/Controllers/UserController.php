@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\RegisterUserRequest; 
 
 class UserController extends Controller
 {
-    public function login(LoginRequest $request){
+    public function login(LoginUserRequest $request){
 
     }
 
@@ -15,7 +15,7 @@ class UserController extends Controller
         
     }
 
-    public function register(){
+    public function register(RegisterUserRequest $request){
         
     }
 }
