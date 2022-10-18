@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     //CRUD BOOK STORE
     Route::apiResource('/book_store', BookStoreController::class);
+    //LOGOUT OF ACCOUNT
+    Route::get('/user/logout', [UserController::class,'logout']);
 });
 
 //LOGIN IN ACCOUNT
 Route::post('/user/login', [UserController::class,'login']);
-//LOGOUT OF ACCOUNT
-Route::post('/user/logout', [UserController::class,'logout']);
 //USER REGISTER
 Route::post('/user/register', [UserController::class,'register']);
