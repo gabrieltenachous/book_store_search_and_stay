@@ -37,7 +37,8 @@ and I run the EnsureFrontendRequestsAreStateful in the api to work the SPA to be
 * email checked if it was a single user
 ### validation request BookStoreRequest
 * isbn and value I check if the value is between 0 to y so as not to give an error in the bank I put isbn as an integer and value numeric
-### create controller LoginController,RegisterController and logout
+### create controller LoginController,RegisterController and logout  
+* I created Mutators and Casting for password hash in setPasswordAttribute template
 * login check if the user exists if not return 503 if yes return the token
 * logout it destroys the token having to generate a new one
 * register uses RegisterUserRequest to validate before submitting the form
