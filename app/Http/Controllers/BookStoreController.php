@@ -15,8 +15,7 @@ class BookStoreController extends Controller
      */
     public function index(BookStoreRepositoryInterface $model)
     {
-        $book_store = $model->all();
-        
+        $book_store = $model->all(); 
         return response()->json(
             [
                 'message'=>'Book store returned successfully','book_store'=>$book_store
@@ -31,9 +30,9 @@ class BookStoreController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BookStoreRequest $request)
+    public function store(BookStoreRepositoryInterface $model,BookStoreRequest $request)
     { 
-        $book_store = BookStore::create(array_merge($request->all(), ['user_id' => Auth::user()->id]));
+        $book_store = $model->create($request->all());
         return response()->json(
             [
                 'message'=>'Book store created successfully','book_store'=>$book_store
@@ -47,16 +46,16 @@ class BookStoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(BookStoreRepositoryInterface $model,$id)
     {
-        $book_store = BookStore::with('user')->find($id); 
+        $book_store = $model->find($id); 
         if($book_store){ 
             return response()->json(
                 [
                     'message'=>'Book store returned successfully','book_store'=>$book_store
                 ], 200
             );
-        }else{ 
+        }else{
             return response()->json(
                 [
                     'message'=>'Book store not exist','book_store'=>$book_store
@@ -72,16 +71,10 @@ class BookStoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BookStoreRequest $request, $id)
+    public function update(BookStoreRepositoryInterface $model ,BookStoreRequest $request,$id)
     {
-        $book_store = BookStore::with('user')->find($id); 
-        if($book_store){
-            BookStore::updateOrCreate(
-                [
-                    'id'=>$id
-                ],
-                array_merge($request->all(), ['user_id' => Auth::user()->id])
-            );
+        $book_store = $model->update($request->all(),$id); 
+        if($book_store){ 
             return response()->json(
                 [
                     'message'=>'Book store updated successfully','book_store'=>$book_store
@@ -102,20 +95,21 @@ class BookStoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BookStoreRepositoryInterface $model,$id)
     { 
-        $book_store = BookStore::find($id);  
-        if($book_store){
-            $book_store->delete();
+        $book_store_find = $model->find($id); 
+        
+        if($book_store_find){ 
+            $model->destroy($id); 
             return response()->json(
                 [
-                    'message'=>'Book store deleted successfully','book_store'=>$book_store
+                    'message'=>'Book store deleted successfully','book_store'=>$book_store_find
                 ], 200
             );
         }else{ 
             return response()->json(
                 [
-                    'message'=>'Book store not exist','book_store'=>$book_store
+                    'message'=>'Book store not exist','book_store'=>$book_store_find
                 ], 200
             ); 
         }

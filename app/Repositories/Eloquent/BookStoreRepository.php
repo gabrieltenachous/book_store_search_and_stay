@@ -9,5 +9,4 @@ class BookStoreRepository extends AbstractRepository implements BookStoreReposit
 
     protected $model = BookStore::class;
  
-    
 }
