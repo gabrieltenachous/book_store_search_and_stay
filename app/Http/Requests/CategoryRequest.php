@@ -29,7 +29,7 @@ class CategoryRequest extends FormRequest
                 return [ 
                     'name' => 'required|string|max:255', 
                     'book_stores_categories' => 'nullable|array', 
-                    'book_stores_categories.*' => 'required|integer|exists:book_stores,id|distinct', 
+                    'book_stores_categories.*.book_store_id' => 'required|integer|exists:book_stores,id|distinct', 
                 ];
                 break; 
             case 'PUT': 
