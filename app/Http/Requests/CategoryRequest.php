@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoryRequest extends FormRequest
 {
@@ -24,8 +25,9 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [ 
-            'name' => 'required|string|max:255',
-            'book_store_id' => 'required|integer|exists:book_stores,id',
+            'name' => 'required|string|max:255', 
+            'books_stories' => 'required|array', 
+            'books_stories.*' => 'required|integer|exists:book_stores,id|distinct', 
         ];
-    }
+    } 
 }

@@ -20,7 +20,7 @@ class Category extends Model
     protected $with = ["book_stores_categories"];
 
     public function book_stores_categories()
-    {
+    { 
     	return $this->hasMany(BookStoreCategory::class);
-    }
+    } 
 }

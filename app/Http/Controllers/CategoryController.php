@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class CategoryController extends Controller
     public function index(CategoryRepositoryInterface $model)
     {
         $category = $model->all(); 
-        
+
         return response()->json(
             [
                 'message'=>'Category returned successfully','category'=>$category
@@ -29,9 +30,23 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(CategoryRepositoryInterface $model,CategoryRequest $request)
+    {  
+        $request_all = $request->all(); 
+        $category = $model->create($request_all);
+        foreach($request_all["books_stories"] as $book_store_id){ 
+            $book_store_category[] = $category->book_stores_categories()->create(
+                ['book_store_id' => $book_store_id]
+            ); 
+        }
+        return response()->json(
+            [
+                'message'=>'Category created successfully',
+                'book_store_category'=>$book_store_category,
+                'category'=>$category,
+
+            ], 200
+        );
     }
 
     /**

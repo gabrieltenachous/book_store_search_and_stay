@@ -13,8 +13,15 @@ class BookStoreCategory extends Model
     protected $fillable = [
         'user_id',
         'category_id', 
-    ];
-    protected $with = ["user"];
+        'book_store_id', 
+    ]; 
+
+    public function save(array $options = array())
+    {
+        $this->user_id = auth()->id();
+        parent::save($options);
+    }
+
     public function user()
     {
     	return $this->belongsTo(User::class);
@@ -23,5 +30,10 @@ class BookStoreCategory extends Model
     public function category()
     {
     	return $this->belongsTo(Category::class);
+    }
+
+    public function book_store()
+    {
+    	return $this->belongsTo(BookStore::class);
     }
 }
