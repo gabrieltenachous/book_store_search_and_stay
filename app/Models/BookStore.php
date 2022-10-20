@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class BookStore extends Model
 {
+    protected $table = "book_stores";
     use HasFactory,SoftDeletes;
     
     protected $fillable = [
@@ -17,6 +18,8 @@ class BookStore extends Model
         'value',
         'user_id',
     ]; 
+    protected $with = ["user"];
+    
     public function save(array $options = array())
     {
         $this->user_id = auth()->id();

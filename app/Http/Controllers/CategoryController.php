@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Contracts\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,9 +12,15 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CategoryRepositoryInterface $model)
     {
-        //
+        $category = $model->all(); 
+        
+        return response()->json(
+            [
+                'message'=>'Category returned successfully','category'=>$category
+            ], 200
+        );
     } 
 
     /**

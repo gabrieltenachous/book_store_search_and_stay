@@ -9,12 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BookStoreCategory extends Model
 {
     use HasFactory,SoftDeletes;
-
+    protected $table = "book_stores_categories";
     protected $fillable = [
         'user_id',
         'category_id', 
     ];
-    
+    protected $with = ["user"];
     public function user()
     {
     	return $this->belongsTo(User::class);

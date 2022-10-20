@@ -8,11 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
+    
+    protected $table = "categories";
+
     use HasFactory,SoftDeletes;
 
     protected $fillable = [
         'name', 
-    ]; 
+    ];
+
+    protected $with = ["book_stores_categories"];
 
     public function book_stores_categories()
     {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookStoreController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //CRUD BOOK STORE
     Route::apiResource('/book_store', BookStoreController::class);
     //CRUD CATEGORY
-    Route::apiResource('/category', BookStoreController::class);
+    Route::apiResource('/category', CategoryController::class);
     //LOGOUT OF ACCOUNT
     Route::get('/user/logout', [UserController::class,'logout']);
 });
