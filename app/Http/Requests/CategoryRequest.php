@@ -26,11 +26,10 @@ class CategoryRequest extends FormRequest
     {   
         switch ($this->method()) {
             case 'POST':
-                return [
-                    'salary_claim' => 'required',
-                    'challenge_date' => 'required|date', 
-                    'job_posting_id'=>'required|integer|exists:job_postings,id',
-                    'curriculum'=>'required|file'
+                return [ 
+                    'name' => 'required|string|max:255', 
+                    'books_stories' => 'required|array', 
+                    'books_stories.*' => 'required|integer|exists:book_stores,id|distinct', 
                 ];
                 break; 
             case 'PUT': 

@@ -16,6 +16,7 @@ class BookStoreController extends Controller
     public function index(BookStoreRepositoryInterface $model)
     {
         $book_store = $model->all(); 
+        
         return response()->json(
             [
                 'message'=>'Book store returned successfully','book_store'=>$book_store

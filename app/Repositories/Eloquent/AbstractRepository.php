@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Repositories\Eloquent;
- 
+
+use Exception;
+
 abstract class AbstractRepository{
 
     protected $model;
@@ -27,7 +29,7 @@ abstract class AbstractRepository{
         return $this->model->find($id);
     }
     protected function resolveModel(){
-        return app($this->model);
+        return app($this->model); 
     }
     
 }
