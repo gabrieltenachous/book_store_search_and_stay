@@ -31,5 +31,9 @@ abstract class AbstractRepository{
     protected function resolveModel(){
         return app($this->model); 
     }
+    public function paginate($limit = null)
+    {
+        return $this->model->paginate($limit);
+    }
     
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
  
 use App\Http\Requests\BookStoreRequest; 
 use App\Repositories\Contracts\BookStoreRepositoryInterface;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Auth; 
 
 class BookStoreController extends Controller
@@ -48,6 +49,22 @@ class BookStoreController extends Controller
                 'message'=>'Book store created successfully',
                 'book_store'=>$book_store,
                 'book_store_category'=>$book_store_category
+            ], 200
+        );
+    }
+
+    /**
+     * Display listing with pagination.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function paginate(BookStoreRepositoryInterface $model,Request $request)
+    {
+        $category = $model->paginate($request->limit ?? 10); 
+        
+        return response()->json(
+            [
+                'message'=>'Category returned successfully','category'=>$category
             ], 200
         );
     }

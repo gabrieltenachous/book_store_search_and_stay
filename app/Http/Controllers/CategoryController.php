@@ -25,6 +25,22 @@ class CategoryController extends Controller
     } 
 
     /**
+     * Display listing with pagination.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function paginate(CategoryRepositoryInterface $model,Request $request)
+    {
+        $category = $model->paginate($request->limit ?? 10); 
+        
+        return response()->json(
+            [
+                'message'=>'Category returned successfully','category'=>$category
+            ], 200
+        );
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

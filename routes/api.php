@@ -20,8 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     //CRUD BOOK STORE
     Route::apiResource('/book_store', BookStoreController::class);
+    // PAGINATE BOOK_STORE
+    Route::post('/v1/book_store/paginate', [BookStoreController::class,'paginate']);
     //CRUD CATEGORY
     Route::apiResource('/category', CategoryController::class);
+    // PAGINATE CATEGORY
+    Route::post('/v1/category/paginate', [CategoryController::class,'paginate']);
     //LOGOUT OF ACCOUNT
     Route::get('/user/logout', [UserController::class,'logout']);
 });

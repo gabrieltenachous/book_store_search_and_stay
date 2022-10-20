@@ -9,4 +9,5 @@ interface CategoryRepositoryInterface{
     public function find($id);
     public function update(array $data,$id);
     public function destroy($id); 
+    public function paginate($limit = null);
 }
