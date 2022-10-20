@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
     	return $this->hasMany(BookStore::class);
     }
+
+    public function book_stores_categories()
+    {
+    	return $this->hasMany(BookStoreCategory::class);
+    }
 }
