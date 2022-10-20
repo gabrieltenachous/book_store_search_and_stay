@@ -49,3 +49,54 @@ and I run the EnsureFrontendRequestsAreStateful in the api to work the SPA to be
 * put => check if the library exists before submitting the form
 * delete => check if the library exists before deleting
 
+## CRUD Challenge part 2 (INTERFACE,VALIDATION,RELATION CATEGORIES N*N and PAGINATION)
+
+### creating repositories and interfaces for the index method in BookStoreCon…
+* In summary, about repository and interface, it is widely used for code optimization, code abstraction, Controller is no longer responsible for calling the Model directly, it is always instantiated by the Interface
+* Methods like index call the Interface to bring in the data from the Model (ORM)
+* I bind Laravel to understand that this is a Respository instance so it doesn't give an "not instantiable" error.
+
+### CRUD BookStore Repositories, Interface and Validation
+* Changes the rest of the methods to be called by the Interface
+* Inside the interface I call the create, find, update and destroy methods
+
+### Change the BookStore nullable attribute and install doctrine/dbal in comp…
+* I instantiated the doctrine/dbal , so I can change the columns to nullable
+
+### Create migration categories, book_stores_categories and replace migrate…
+*created as migration categories and book_stores_categories
+* Note: I had forgotten to put the Foreign more for us to commit I'll add it
+
+### Create Model BookStoreCategory and Category with relation
+* Creation of models and relationships
+
+### Create controller route and category
+
+### Validation CategoryRequest
+* validation of categories: exists checks if there is an id of this table
+
+### create index (get) categories with Interace,Repositories in Controller
+* Same work with BookStore, adding the bind to the AppServiceProvider.php, creating the interfaces and Category repository and changing the name of the table in the model
+
+### create store category with relation book_stores_categories
+* in the store in addition to creating the category table I can relate to the books (several) so I can put several books_stories creating this relationship when saving
+* I fixed some related ones in the model and added the $with to bring all the hasmany from book_store_categories ready
+
+### CRUD category finished* Crud de category parcialmente finalizado, instanciei todos as Interfaces e modifiquei as validações
+
+### fixing a category validation
+
+* I did valdiacacao for POST AND PUT because they are different treatments
+### Add Category in BookStoreController
+* I gave the save to object array type to handle better when saving!
+* validation for book_stores_categories.* when there are several and *.book_store_id to call the id of book_store, validating if it is distinct if it has a repeated value in the array
+### adjusting CategoryRequest
+
+
+### create route/repository/interface and controller for paginate
+* creation of pagination via post, for the user to send the limit of pages if null returns by default 0 - 10
+* creation of route /v1/category/paginate and /v1/book_store/paginate
+
+### Create Repository,Interface in UserController
+* and finally I put the interface in the User registration and in the login, it was necessary a new method to work the filter inside the UserRepository
+
