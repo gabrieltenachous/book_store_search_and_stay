@@ -30,7 +30,7 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function paginate(CategoryRepositoryInterface $model,Request $request)
-    {
+    { 
         $category = $model->paginate($request->limit ?? 10); 
         
         return response()->json(

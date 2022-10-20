@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
  
 use App\Http\Requests\BookStoreRequest; 
-use App\Repositories\Contracts\BookStoreRepositoryInterface;
-use Illuminate\Http\Client\Request;
-use Illuminate\Support\Facades\Auth; 
+use App\Repositories\Contracts\BookStoreRepositoryInterface; 
+use Illuminate\Http\Request; 
 
 class BookStoreController extends Controller
 {
@@ -59,7 +58,7 @@ class BookStoreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function paginate(BookStoreRepositoryInterface $model,Request $request)
-    {
+    {   
         $category = $model->paginate($request->limit ?? 10); 
         
         return response()->json(
@@ -108,20 +107,21 @@ class BookStoreController extends Controller
             'name'=>$request_all["name"],
             'isbn'=>$request_all["isbn"],   
             'value'=>$request_all["value"],
-        ],$id); 
+        ],$id);  
         $book_store_category = [];
-        if(isset($request_all["book_stores_categories"])){
-            foreach($request_all["book_stores_categories"] as $object){   
-                $book_store->book_stores_categories()->update(
-                    [
-                        'category_id' => $object["category_id"]
-                    ], 
-                    $object["id"] 
-                ); 
-                $book_store_category[] = $model->find($object["id"]);
-            }
-        }
         if($book_store){ 
+            if(isset($request_all["book_stores_categories"])){
+                foreach($request_all["book_stores_categories"] as $object){     
+                    $book_store->book_stores_categories()->update(
+                        [
+                            'category_id' => $object["category_id"]
+                        ], 
+                        $object["id"] 
+                    ); 
+                    $book_store_category[] = $model->find($object["id"]);
+                }
+            }
+            
             return response()->json(
                 [
                     'message'=>'Book store updated successfully',

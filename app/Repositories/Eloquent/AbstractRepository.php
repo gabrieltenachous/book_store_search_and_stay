@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Repositories\Eloquent;
-
-use Exception;
+namespace App\Repositories\Eloquent; 
 
 abstract class AbstractRepository{
 
