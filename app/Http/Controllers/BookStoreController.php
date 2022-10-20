@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Http\Requests\BookStoreRequest;
-use App\Models\BookStore;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+ 
+use App\Http\Requests\BookStoreRequest; 
+use App\Repositories\Contracts\BookStoreRepositoryInterface;
+use Illuminate\Support\Facades\Auth; 
 
 class BookStoreController extends Controller
 {
@@ -14,9 +13,10 @@ class BookStoreController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(BookStoreRepositoryInterface $model)
     {
-        $book_store = BookStore::with('user')->paginate(50);
+        $book_store = $model->all();
+        
         return response()->json(
             [
                 'message'=>'Book store returned successfully','book_store'=>$book_store
