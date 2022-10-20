@@ -55,9 +55,23 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(CategoryRepositoryInterface $model,$id)
     {
-        //
+        $category = $model->find($id); 
+        if($category){
+            
+            return response()->json(
+                [
+                    'message'=>'Category returned successfully','category'=>$category
+                ], 200
+            );
+        }else{
+            return response()->json(
+                [
+                    'message'=>'Category not exist','category'=>$category
+                ], 200
+            ); 
+        }
     } 
 
     /**
@@ -67,9 +81,38 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRepositoryInterface $model ,CategoryRequest $request,$id)
     {
-        //
+        $request_all = $request->all();  
+
+        $category = $model->update(
+            [
+                'name'=>$request_all["name"]
+            ]
+        ,$id);  
+
+        if($category){ 
+
+            foreach($request_all["books_stories"] as $key => $book_store){ 
+                $book_store_category[] = $category->book_stores_categories()->update(
+                    [
+                        'book_store_id' => $book_store["book_store_id"]
+                    ],
+                    $book_store["id"]
+                ); 
+            }
+            return response()->json(
+                [
+                    'message'=>'Book store updated successfully','category'=>$category
+                ], 200
+            );
+        }else{  
+            return response()->json(
+                [
+                    'message'=>'Category not exist','category'=>$category
+                ], 200
+            ); 
+        }
     }
 
     /**
@@ -78,8 +121,22 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CategoryRepositoryInterface $model,$id)
     {
-        //
+        $category = $model->find($id); 
+        if($category){ 
+            $model->destroy($id); 
+            return response()->json(
+                [
+                    'message'=>'Category deleted successfully','category'=>$category
+                ], 200
+            );
+        }else{ 
+            return response()->json(
+                [
+                    'message'=>'Category not exist','category'=>$category
+                ], 200
+            ); 
+        }
     }
 }

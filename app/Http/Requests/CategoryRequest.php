@@ -23,11 +23,25 @@ class CategoryRequest extends FormRequest
      * @return array<string, mixed>
      */
     public function rules()
-    {
-        return [ 
-            'name' => 'required|string|max:255', 
-            'books_stories' => 'required|array', 
-            'books_stories.*' => 'required|integer|exists:book_stores,id|distinct', 
-        ];
+    {   
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'salary_claim' => 'required',
+                    'challenge_date' => 'required|date', 
+                    'job_posting_id'=>'required|integer|exists:job_postings,id',
+                    'curriculum'=>'required|file'
+                ];
+                break; 
+            case 'PUT': 
+                return [ 
+                    'name' => 'required|string|max:255', 
+                    'books_stories' => 'required|array', 
+                    'books_stories.*.book_store_id' => 'required|integer|exists:book_stores,id|distinct', 
+                    'books_stories.*.id' => 'required|integer|exists:book_stores_categories,id|distinct', 
+                ];
+            default:
+                break;
+        } 
     } 
 }
