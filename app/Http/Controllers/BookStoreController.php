@@ -33,10 +33,21 @@ class BookStoreController extends Controller
      */
     public function store(BookStoreRepositoryInterface $model,BookStoreRequest $request)
     { 
-        $book_store = $model->create($request->all());
+        $request_all = $request->all();
+        $book_store = $model->create($request_all);
+        $book_store_category = [];  
+        if(isset($request_all["book_stores_categories"])){
+            foreach($request_all["book_stores_categories"] as $object){ 
+                $book_store_category[] = $book_store->book_stores_categories()->create(
+                    ['category_id' => $object["category_id"]]
+                ); 
+            }
+        }
         return response()->json(
             [
-                'message'=>'Book store created successfully','book_store'=>$book_store
+                'message'=>'Book store created successfully',
+                'book_store'=>$book_store,
+                'book_store_category'=>$book_store_category
             ], 200
         );
     }
@@ -73,18 +84,40 @@ class BookStoreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(BookStoreRepositoryInterface $model ,BookStoreRequest $request,$id)
-    {
-        $book_store = $model->update($request->all(),$id); 
+    { 
+        $request_all = $request->all(); 
+        
+        $book_store = $model->update([
+            'name'=>$request_all["name"],
+            'isbn'=>$request_all["isbn"],   
+            'value'=>$request_all["value"],
+        ],$id); 
+        $book_store_category = [];
+        if(isset($request_all["book_stores_categories"])){
+            foreach($request_all["book_stores_categories"] as $object){   
+                $book_store->book_stores_categories()->update(
+                    [
+                        'category_id' => $object["category_id"]
+                    ], 
+                    $object["id"] 
+                ); 
+                $book_store_category[] = $model->find($object["id"]);
+            }
+        }
         if($book_store){ 
             return response()->json(
                 [
-                    'message'=>'Book store updated successfully','book_store'=>$book_store
+                    'message'=>'Book store updated successfully',
+                    'book_store'=>$book_store,
+                    'book_store_category'=>$book_store_category
                 ], 200
             );
         }else{  
             return response()->json(
                 [
-                    'message'=>'Book store not exist','book_store'=>$book_store
+                    'message'=>'Book store not exist',
+                    'book_store'=>$book_store,
+                    'book_store_category'=>$book_store_category
                 ], 200
             ); 
         }

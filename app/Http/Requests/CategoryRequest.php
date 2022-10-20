@@ -28,16 +28,16 @@ class CategoryRequest extends FormRequest
             case 'POST':
                 return [ 
                     'name' => 'required|string|max:255', 
-                    'books_stories' => 'required|array', 
-                    'books_stories.*' => 'required|integer|exists:book_stores,id|distinct', 
+                    'book_stores_categories' => 'nullable|array', 
+                    'book_stores_categories.*' => 'required|integer|exists:book_stores,id|distinct', 
                 ];
                 break; 
             case 'PUT': 
                 return [ 
                     'name' => 'required|string|max:255', 
-                    'books_stories' => 'required|array', 
-                    'books_stories.*.book_store_id' => 'required|integer|exists:book_stores,id|distinct', 
-                    'books_stories.*.id' => 'required|integer|exists:book_stores_categories,id|distinct', 
+                    'book_stores_categories' => 'nullable|array', 
+                    'book_stores_categories.*.book_store_id' => 'required|integer|exists:book_stores,id|distinct', 
+                    'book_stores_categories.*.id' => 'required|integer|exists:book_stores_categories,id|distinct', 
                 ];
             default:
                 break;

@@ -18,7 +18,7 @@ class BookStore extends Model
         'value',
         'user_id',
     ]; 
-    protected $with = ["user","book_store_categories"];
+    protected $with = ["user","book_stores_categories"];
     
     public function save(array $options = array())
     {
@@ -29,7 +29,7 @@ class BookStore extends Model
     {
     	return $this->belongsTo(User::class);
     }
-    public function book_store_categories()
+    public function book_stores_categories()
     {
     	return $this->hasMany(BookStoreCategory::class);
     }

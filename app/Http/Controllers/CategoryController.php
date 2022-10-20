@@ -34,10 +34,13 @@ class CategoryController extends Controller
     {  
         $request_all = $request->all(); 
         $category = $model->create($request_all);
-        foreach($request_all["books_stories"] as $book_store_id){ 
-            $book_store_category[] = $category->book_stores_categories()->create(
-                ['book_store_id' => $book_store_id]
-            ); 
+        $book_store_category = [];
+        if(isset($request_all["book_stores_categories"])){
+            foreach($request_all["book_stores_categories"] as $book_store_id){ 
+                $book_store_category[] = $category->book_stores_categories()->create(
+                    ['book_store_id' => $book_store_id]
+                ); 
+            }
         }
         return response()->json(
             [
@@ -92,15 +95,17 @@ class CategoryController extends Controller
         ,$id);  
 
         if($category){ 
-
-            foreach($request_all["books_stories"] as $key => $book_store){ 
-                $book_store_category[] = $category->book_stores_categories()->update(
-                    [
-                        'book_store_id' => $book_store["book_store_id"]
-                    ],
-                    $book_store["id"]
-                ); 
+            if(isset($request_all["book_stores_categories"])){
+                foreach($request_all["book_stores_categories"] as $key => $book_store){ 
+                    $book_store_category[] = $category->book_stores_categories()->update(
+                        [
+                            'book_store_id' => $book_store["book_store_id"]
+                        ],
+                        $book_store["id"]
+                    ); 
+                }
             }
+            
             return response()->json(
                 [
                     'message'=>'Book store updated successfully','category'=>$category
