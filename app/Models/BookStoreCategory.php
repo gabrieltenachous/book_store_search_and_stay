@@ -10,17 +10,10 @@ class BookStoreCategory extends Model
 {
     use HasFactory,SoftDeletes;
     protected $table = "book_stores_categories";
-    protected $fillable = [
-        'user_id',
+    protected $fillable = [ 
         'category_id', 
         'book_store_id', 
-    ]; 
-
-    public function save(array $options = array())
-    {
-        $this->user_id = auth()->id();
-        parent::save($options);
-    }
+    ];  
 
     public function user()
     {
