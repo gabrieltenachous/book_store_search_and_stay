@@ -14,11 +14,7 @@ class BookStoreCategory extends Model
         'category_id', 
         'book_store_id', 
     ];  
-
-    public function user()
-    {
-    	return $this->belongsTo(User::class);
-    }
+ 
     
     public function category()
     {
